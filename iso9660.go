@@ -560,6 +560,9 @@ func (ts *RecordingTimestamp) UnmarshalBinary(data []byte) error {
 	min := int(data[4])
 	sec := int(data[5])
 	tzOffset := int(data[6])
+	if tzOffset > 128 {
+		tzOffset -= 256
+	}
 	secondsInAQuarter := 60 * 15
 
 	tz := time.FixedZone("", tzOffset*secondsInAQuarter)
